@@ -12,8 +12,13 @@ pipeline {
 		}
 		stage('Test') {
 			steps {
-                sh './vendor/bin/phpunit tests'
+                sh './vendor/bin/phpunit --log-junit logs/unitreport.xml -c test/sphpunit.xml tests'
             }
+		}	
+	}
+	post {
+		always{
+			junit testResults: 'logs/unitreport.xml'
 		}
 	}
 }
